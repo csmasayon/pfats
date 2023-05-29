@@ -14,8 +14,8 @@ export default function Home() {
   }
 
   return (
-    <div className="container bg-white dark:bg-gray-700 h-screen w-screen max-w-full">
-      <Head>  
+    <div className="container bg-gray-100 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
+      <Head>
         <title>Personalized User Dashboard</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>

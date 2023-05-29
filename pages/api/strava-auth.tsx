@@ -1,29 +1,30 @@
-import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
+import axios from 'axios';
 
-const { STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET } = process.env;
+const CLIENT_ID = process.env.STRAVA_CLIENT_ID || '';
+const CLIENT_SECRET = process.env.STRAVA_CLIENT_SECRET || '';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { code } = req.query;
 
-  // Exchange the authorization code for an access token
-  const tokenResponse = await axios.post('https://www.strava.com/oauth/token', null, {
-    params: {
-      client_id: STRAVA_CLIENT_ID,
-      client_secret: STRAVA_CLIENT_SECRET,
+  try {
+    // Exchange authorization code for access token
+    const response = await axios.post('https://www.strava.com/oauth/token', {
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET,
       code,
-      grant_type: 'authorization_code'
-    },
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
+      grant_type: 'authorization_code',
+    });
 
-  // Extract the access token from the response
-  const accessToken = tokenResponse.data.access_token;
+    const accessToken = response.data.access_token;
 
-  // Handle the access token as needed (store it in a database, set it as a cookie, etc.)
-  // You can also redirect the user to another page with the access token in the query parameters
+    // Save the access token
+    res.setHeader('Set-Cookie', `access_token=${accessToken}; Path=/`);
 
-  res.status(200).json({ accessToken });
+    // Redirect to the page where stuff are loaded
+    res.redirect('/dashboard');
+  } catch (error) {
+    console.error('Failed to exchange authorization code for access token:', error);
+    res.status(500).json({ error: 'Failed to authenticate with Strava' });
+  }
 }
