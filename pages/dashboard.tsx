@@ -120,13 +120,7 @@ export default function Dashboard(){
 
             <div className="flex-none max-w-sm">
 
-              {(personalData: { firstname: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined;
-                lastname: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined;
-                city: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined;
-                country: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined;
-                sex: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined;
-                weight: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined; }) =>
-                (<div className="text-center break-normal max-w-sm p-6 mt-5 ml-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-3 font-normal text-black dark:text-white">
+              {personalData && (<div className="text-center break-normal max-w-sm p-6 mt-5 ml-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-3 font-normal text-black dark:text-white">
                 <div>{profilePicture && <img className="rounded-full h-20 mb-4 mx-auto" src={profilePicture} alt="Profile Picture" />}</div>
                 <p className="font-bold">{personalData.firstname} {personalData.lastname}</p>
                 <p>{personalData.city}, {personalData.country}</p>

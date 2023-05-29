@@ -1,4 +1,4 @@
-# PHYSICAL FITNESS ACTIVITY TRACKER SYSTEM
+# Physical Fitness Actvity Tracker System
 
 A personalized user dashboard using the Strava API.
 
@@ -17,4 +17,4 @@ Deployed using:
 
 Written in:
 - [TypeScript](https://github.com/microsoft/TypeScript)
-- [JavaScript]
+- JavaScript
