@@ -10,26 +10,27 @@ import dynamic from 'next/dynamic';
 import polyline from '@mapbox/polyline'
 import LogoutButton from './components/LogOutButton'
 
-const MapContainer = dynamic(
-  () => import('react-leaflet').then((module) => module.MapContainer),
-  { ssr: false }
-);
-const TileLayer = dynamic(
-  () => import('react-leaflet').then((module) => module.TileLayer),
-  { ssr: false }
-);
-const Marker = dynamic(
-  () => import('react-leaflet').then((module) => module.Marker),
-  { ssr: false }
-);
-const Popup = dynamic(
-  () => import('react-leaflet').then((module) => module.Popup),
-  { ssr: false }
-);
-const Polyline = dynamic(
-  () => import('react-leaflet').then((module) => module.Polyline),
-  { ssr: false }
-);
+const MapContainer = dynamic(() => import('react-leaflet').then((module) => module.MapContainer), {
+  ssr: false
+});
+
+const TileLayer = dynamic(() => import('react-leaflet').then((module) => module.TileLayer), {
+  ssr: false
+});
+
+const Marker = dynamic(() => import('react-leaflet').then((module) => module.Marker), {
+  ssr: false
+});
+
+const Popup = dynamic(() => import('react-leaflet').then((module) => module.Popup), {
+  ssr: false
+});
+
+const Polyline = dynamic(() => import('react-leaflet').then((module) => module.Polyline), {
+  ssr: false
+});
+
+// Your code continues...
 
 
 export default function Dashboard(){
