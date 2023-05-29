@@ -1,33 +1,15 @@
 import Head from 'next/head'
-import clientPromise from '../lib/mongodb'
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import 'tailwindcss/tailwind.css'
 import { JSXElementConstructor, Key, ReactChild, ReactElement, ReactFragment, ReactNodeArray, ReactPortal } from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import L, { LatLngExpression } from 'leaflet';
-import dynamic from 'next/dynamic';
 import polyline from '@mapbox/polyline'
 import LogoutButton from './components/LogOutButton'
-
-const MapContainer = dynamic(() => import('react-leaflet').then((module) => module.MapContainer), {
-  ssr: false,
-});
-
-const TileLayer = dynamic(() => import('react-leaflet').then((module) => module.TileLayer), {
-  ssr: false,
-});
-
-const Polyline = dynamic(() => import('react-leaflet').then((module) => module.Polyline), {
-  ssr: false,
-});
-
-const Popup = dynamic(() => import('react-leaflet').then((module) => module.Popup), {
-  ssr: false,
-});
-
+import { MapContainer, TileLayer, Polyline, Popup } from 'react-leaflet';
 
 export default function Dashboard(){
+  
     interface Activity {
       id: number;
       name: string;
@@ -131,9 +113,10 @@ export default function Dashboard(){
           }
         };
 
-        fetchActivities();
-        fetchPersonalData();
-        fetchProfilePicture();
+          fetchActivities();
+          fetchPersonalData();
+          fetchProfilePicture();
+        
       }, []);
 
       const getAccessToken = () => {
@@ -175,31 +158,31 @@ export default function Dashboard(){
       };
 
       const MapComponent = () => {
-      const [isClient, setIsClient] = useState(false);
-    
-      useEffect(() => {
-        setIsClient(true);
-      }, []);
-    
-      if (!isClient) {
-        return null; // Render nothing on the server-side
-      }
-    
-      return (
-        <MapContainer center={mapCenter} zoom={14} style={{ height: '40em', width: '100%' }}>
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
-          {nodes.map((activity, i) => (
-            <Polyline key={i} positions={activity.activityPositions}>
-              <Popup>
-                <div>
-                  <h2>{"Name: " + activity.activityName}</h2>
-                </div>
-              </Popup>
-            </Polyline>
-          ))}
-        </MapContainer>
-      );
-    };
+        const [isClient, setIsClient] = useState(false);
+      
+        useEffect(() => {
+          setIsClient(true);
+        }, []);
+      
+        if (!isClient) {
+          return null; // Render nothing on the server-side
+        }
+      
+        return (
+          <MapContainer center={mapCenter} zoom={14} style={{ height: '40em', width: '100%' }}>
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
+            {nodes.map((activity, i) => (
+              <Polyline key={i} positions={activity.activityPositions}>
+                <Popup>
+                  <div>
+                    <h2>{"Name: " + activity.activityName}</h2>
+                  </div>
+                </Popup>
+              </Polyline>
+            ))}
+          </MapContainer>
+        );
+      };
 
       return (
         <div className="container bg-gray-100 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
@@ -234,7 +217,7 @@ export default function Dashboard(){
                 <div className="flex-1 justify-center max-w-4xl">
 
                   <div className="sticky top-5 text-center break-normal p-2 mr-5 mb-5 ml-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                  <MapComponent />
+                    <MapComponent />
                   </div>   
                   
                 </div> 

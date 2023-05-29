@@ -1,9 +1,5 @@
 import Head from 'next/head'
-import clientPromise from '../lib/mongodb'
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import 'tailwindcss/tailwind.css'
-import { useEffect } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 export default function Home() {
