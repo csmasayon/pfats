@@ -6,9 +6,30 @@ import { JSXElementConstructor, Key, ReactChild, ReactElement, ReactFragment, Re
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+interface Activity {
+  id: number;
+  name: string;
+  type: string;
+  sport_type: string;
+  start_date_local: Date;
+  elapsed_time: number;
+  distance: Float32Array;
+  // Add other properties as needed
+}
+
+interface PersonalData{
+  id: number;
+  firstname: string;
+  lastname: string;
+  city: string;
+  country: string;
+  sex: string;
+  weight: number;
+}
+
 export default function Dashboard(){
-    const [activities, setActivities] = useState([]);
-    const [personalData, setPersonalData] = useState({});
+    const [activities, setActivities] = useState<Activity[]>([]);
+    const [personalData, setPersonalData] = useState<PersonalData>();
     const [profilePicture, setProfilePicture] = useState('');
 
     useEffect(() => {
@@ -99,7 +120,13 @@ export default function Dashboard(){
 
             <div className="flex-none max-w-sm">
 
-              {personalData && (<div className="text-center break-normal max-w-sm p-6 mt-5 ml-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-3 font-normal text-black dark:text-white">
+              {(personalData: { firstname: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined;
+                lastname: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined;
+                city: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined;
+                country: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined;
+                sex: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined;
+                weight: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined; }) =>
+                (<div className="text-center break-normal max-w-sm p-6 mt-5 ml-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-3 font-normal text-black dark:text-white">
                 <div>{profilePicture && <img className="rounded-full h-20 mb-4 mx-auto" src={profilePicture} alt="Profile Picture" />}</div>
                 <p className="font-bold">{personalData.firstname} {personalData.lastname}</p>
                 <p>{personalData.city}, {personalData.country}</p>
@@ -111,7 +138,13 @@ export default function Dashboard(){
 
             <div className="flex-1 grid justify-center">
 
-                {activities.map((activity: { id: Key | undefined; name: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) => (
+                {activities && activities.map((activity: {
+                  start_date_local: string | number | Date;
+                  distance: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined;
+                  elapsed_time: number;
+                  sport_type: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined;
+                  type: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined; id: Key | undefined; name: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; 
+                  }) => (
                     <div className="text-center break-normal max-w-sm p-6 mt-5 mb-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"><div className='mb-3 font-normal text-black dark:text-white' key={activity.id}>
                     <h3 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{activity.name}</h3>
                     <p>Type: {activity.type}</p>
