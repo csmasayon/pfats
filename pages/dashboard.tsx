@@ -6,7 +6,24 @@ import axios from 'axios';
 import L, { LatLngExpression } from 'leaflet';
 import polyline from '@mapbox/polyline'
 import LogoutButton from './components/LogOutButton'
-import { MapContainer, TileLayer, Polyline, Popup } from 'react-leaflet';
+import dynamic from 'next/dynamic';
+const MapContainer = dynamic(() => import('react-leaflet').then((module) => module.MapContainer), {
+  ssr: false,
+});
+
+const TileLayer = dynamic(() => import('react-leaflet').then((module) => module.TileLayer), {
+  ssr: false,
+});
+
+const Polyline = dynamic(() => import('react-leaflet').then((module) => module.Polyline), {
+  ssr: false,
+});
+
+const Popup = dynamic(() => import('react-leaflet').then((module) => module.Popup), {
+  ssr: false,
+});
+
+
 
 export default function Dashboard(){
   
@@ -182,7 +199,7 @@ export default function Dashboard(){
             ))}
           </MapContainer>
         );
-      };
+      };        
 
       return (
         <div className="container bg-gray-100 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
