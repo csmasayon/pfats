@@ -111,7 +111,7 @@ export default function Dashboard(){
   return (
     <div className="container bg-gray-100 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
      <Head>  
-        <title>Personalized User Dashboard</title>
+        <title>Physical Fitness Activity Tracker System</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
