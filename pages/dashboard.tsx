@@ -145,7 +145,7 @@ export default function Dashboard(){
       };
 
       const hasCoordinates = (activity: Activity) => {
-        return activity.start_latlng && activity.start_latlng.length === 2 && isValidLatLng(activity.start_latlng);
+        return activity.start_latlng && isValidLatLng(activity.start_latlng);
       };
 
       const isValidLatLng = (latlng: LatLngExpression | undefined) => {
