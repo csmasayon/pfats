@@ -9,29 +9,7 @@ import L from 'leaflet';
 import dynamic from 'next/dynamic';
 import polyline from '@mapbox/polyline'
 import LogoutButton from './components/LogOutButton'
-
-const MapContainer = dynamic(() => import('react-leaflet').then((module) => module.MapContainer), {
-  ssr: false
-});
-
-const TileLayer = dynamic(() => import('react-leaflet').then((module) => module.TileLayer), {
-  ssr: false
-});
-
-const Marker = dynamic(() => import('react-leaflet').then((module) => module.Marker), {
-  ssr: false
-});
-
-const Popup = dynamic(() => import('react-leaflet').then((module) => module.Popup), {
-  ssr: false
-});
-
-const Polyline = dynamic(() => import('react-leaflet').then((module) => module.Polyline), {
-  ssr: false
-});
-
-// Your code continues...
-
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 
 export default function Dashboard(){
     interface Activity {
@@ -66,6 +44,7 @@ export default function Dashboard(){
     const [profilePicture, setProfilePicture] = useState('');
     const [nodes, setNodes] = useState<Node[]>([]);
     const [mapCenter, setMapCenter] = useState<[number, number] | null>(null);
+    
 
     useEffect(() => {
       const fetchActivities = async () => {
@@ -174,6 +153,33 @@ export default function Dashboard(){
         return !isNaN(lat) && !isNaN(lng);
       };
 
+      const MapComponent = () => {
+        const [isClient, setIsClient] = useState(false);
+      
+        useEffect(() => {
+          setIsClient(true);
+        }, []);
+      
+        if (!isClient) {
+          return null; // Render nothing on the server-side
+        }
+      
+        return (
+          <MapContainer center={mapCenter} zoom={14} style={{ height: '40em', width: '100%' }}>
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
+            {nodes.map((activity, i) => (
+              <Polyline key={i} positions={activity.activityPositions}>
+                <Popup>
+                  <div>
+                    <h2>{"Name: " + activity.activityName}</h2>
+                  </div>
+                </Popup>
+              </Polyline>
+            ))}
+          </MapContainer>
+        );
+      };
+
       return (
         <div className="container bg-gray-100 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
         <Head>  
@@ -207,18 +213,7 @@ export default function Dashboard(){
                 <div className="flex-1 justify-center max-w-4xl">
 
                   <div className="sticky top-5 text-center break-normal p-2 mr-5 mb-5 ml-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                          <MapContainer center={mapCenter} zoom={14} style={{ height: '40em', width: '100%' }}>
-                            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
-                            {nodes.map((activity, i) => (
-                            <Polyline key = {i} positions={activity.activityPositions}>
-                              <Popup>
-                                <div>
-                                  <h2>{"Name: " + activity.activityName}</h2>
-                                </div>
-                              </Popup>
-                            </Polyline>
-                          ))}
-                          </MapContainer>
+                  <MapComponent />
                   </div>   
                   
                 </div> 
