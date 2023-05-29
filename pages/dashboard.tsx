@@ -5,7 +5,7 @@ import 'tailwindcss/tailwind.css'
 import { JSXElementConstructor, Key, ReactChild, ReactElement, ReactFragment, ReactNodeArray, ReactPortal } from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import L from 'leaflet';
+import L, { LatLngExpression } from 'leaflet';
 import dynamic from 'next/dynamic';
 import polyline from '@mapbox/polyline'
 import LogoutButton from './components/LogOutButton'
@@ -20,7 +20,7 @@ export default function Dashboard(){
       start_date_local: Date;
       elapsed_time: number;
       distance: Float32Array;
-      start_latlng: [number, number] | null;
+      start_latlng: LatLngExpression | undefined;
       // Add other properties as needed
     }
     
