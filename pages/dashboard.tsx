@@ -148,7 +148,7 @@ export default function Dashboard(){
         return activity.start_latlng && activity.start_latlng.length === 2 && isValidLatLng(activity.start_latlng);
       };
 
-      const isValidLatLng = (latlng: [number, number]) => {
+      const isValidLatLng = (latlng: LatLngExpression | undefined) => {
         const [lat, lng] = latlng;
         return !isNaN(lat) && !isNaN(lng);
       };
