@@ -19,4 +19,4 @@ const LogoutButton: React.FC = () => {
   )
 }
 
-export default LogoutButton
+export { LogoutButton };
