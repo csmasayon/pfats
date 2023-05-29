@@ -149,6 +149,10 @@ export default function Dashboard(){
       };
 
       const isValidLatLng = (latlng: LatLngExpression | undefined) => {
+        if (!latlng || latlng.length !== 2) {
+          return false;
+        }
+        
         const [lat, lng] = latlng;
         return !isNaN(lat) && !isNaN(lng);
       };
