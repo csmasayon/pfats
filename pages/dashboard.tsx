@@ -5,8 +5,27 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { LatLngExpression } from 'leaflet';
 import polyline from '@mapbox/polyline'
-import LogoutButton from './components/LogOutButton'
-import { MapContainer, TileLayer, Popup, Polyline } from 'react-leaflet';
+import dynamic from 'next/dynamic'
+import router, { useRouter } from 'next/router';
+import { isAccessTokenValid } from './utils/auth';
+import LogoutButton from './components/logoutbutton';
+import 'leaflet/dist/leaflet.css';
+
+const MapContainer = dynamic(() => import('react-leaflet').then((module) => module.MapContainer), {
+  ssr: false,
+});
+
+const TileLayer = dynamic(() => import('react-leaflet').then((module) => module.TileLayer), {
+  ssr: false,
+});
+
+const Polyline = dynamic(() => import('react-leaflet').then((module) => module.Polyline), {
+  ssr: false,
+});
+
+const Popup = dynamic(() => import('react-leaflet').then((module) => module.Popup), {
+  ssr: false,
+});
 
 export default function Dashboard(){
 
@@ -42,8 +61,32 @@ export default function Dashboard(){
     const [nodes, setNodes] = useState<Node[]>([]);
     const [mapCenter, setMapCenter] = useState<LatLngExpression | undefined>(undefined);
     
+    const getAccessToken = () => {
+      // Get the access token from the cookie
+      const name = 'access_token=';
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const cookies = decodedCookie.split(';');
+  
+      for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i];
+        while (cookie.charAt(0) === ' ') {
+          cookie = cookie.substring(1);
+        }
+        if (cookie.indexOf(name) === 0) {
+          return cookie.substring(name.length, cookie.length);
+        }
+      }
+  
+      return '';
+    };
 
     useEffect(() => {
+
+      if (!isAccessTokenValid()) {
+        // Redirect to the login page if the access token is not valid
+        router.push('/login')
+      }
+
       const fetchActivities = async () => {
           try {
             // Fetch activities using the access token
@@ -119,25 +162,6 @@ export default function Dashboard(){
         
       }, []);
 
-      const getAccessToken = () => {
-        // Get the access token from the cookie
-        const name = 'access_token=';
-        const decodedCookie = decodeURIComponent(document.cookie);
-        const cookies = decodedCookie.split(';');
-    
-        for (let i = 0; i < cookies.length; i++) {
-          let cookie = cookies[i];
-          while (cookie.charAt(0) === ' ') {
-            cookie = cookie.substring(1);
-          }
-          if (cookie.indexOf(name) === 0) {
-            return cookie.substring(name.length, cookie.length);
-          }
-        }
-    
-        return '';
-      };
-
       const convertToLocaleString = (dateTimeString: string | number | Date) => {
         const dateTime = new Date(dateTimeString);
         return dateTime.toLocaleString();
@@ -182,78 +206,79 @@ export default function Dashboard(){
 
       return (
         <div className="container bg-gray-100 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
-        <Head>  
-            <title>Physical Fitness Activity Tracker System</title>
-            <link rel="icon" href="/favicon.ico" />
-            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-            integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-            crossOrigin=""/>
-          </Head>
-
-          <main>
-              <div className='flex mx-auto justify-center'>
-                
-                <div className="flex-none max-w-sm justify-center">
-
-                {personalData && (<div className="sticky top-5 text-center break-normal max-w-sm p-6 ml-6 mb-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 font-normal text-black dark:text-white" key={personalData.id}>
-                  <div>{profilePicture && <img className="rounded-full h-20 mb-4 mx-auto" src={profilePicture} alt="Profile Picture" />}</div>
-                  <p className="font-bold">{personalData.firstname} {personalData.lastname}</p>
-                  <p>{personalData.city}, {personalData.country}</p>
-                  {personalData.sex === 'M' ? (
-                    <p>Male</p>
-                  ) : (
-                    <p>Female</p>
-                  )}
-                  <p>{personalData.weight} kg</p>
-                  <LogoutButton />
-                  </div>)}
-
-                </div>
-
-                <div className="flex-1 justify-center max-w-4xl">
-
-                  <div className="sticky top-5 text-center break-normal p-2 mr-5 mb-5 ml-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                  <MapComponent />
-                  </div>   
+         
+            <div className="container bg-gray-100 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
+            <Head>  
+              <title>Physical Fitness Activity Tracker System</title>
+              <link rel="icon" href="/favicon.ico" />
+            </Head>
+    
+            <main>
+                <div className='flex mx-auto justify-center'>
                   
-                </div> 
-
-                <div className="flex-none justify-center">
-
-                  <div className="overflow-hidden">
+                  <div className="flex-none max-w-sm justify-center">
+    
+                  {personalData && (<div className="sticky top-5 text-center break-normal max-w-sm p-6 ml-6 mb-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 font-normal text-black dark:text-white" key={personalData.id}>
+                    <div>{profilePicture && <img className="rounded-full h-20 mb-4 mx-auto" src={profilePicture} alt="Profile Picture" />}</div>
+                    <p className="font-bold">{personalData.firstname} {personalData.lastname}</p>
+                    <p>{personalData.city}, {personalData.country}</p>
+                    {personalData.sex === 'M' ? (
+                      <p>Male</p>
+                    ) : (
+                      <p>Female</p>
+                    )}
+                    <p>{personalData.weight} kg</p>
+                    <LogoutButton />
+                    </div>)}
+    
+                  </div>
+    
+                  <div className="flex-1 justify-center max-w-4xl">
+    
+                    <div className="sticky top-5 text-center break-normal p-2 mr-5 mb-5 ml-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    <MapComponent />
+                    </div>   
                     
-                     
-                        {activities &&
-                          activities.map((activity: {
-                            start_date_local: string | number | Date;
-                            distance: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined;
-                            elapsed_time: number;
-                            sport_type: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined;
-                            type: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined; id: Key | undefined;
-                            name: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined;
-                          }) => (
-                            <div className="text-center break-normal max-w-sm p-6 mt-5 mb-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-800" key={activity.id}>
-                              <div className="mb-3 font-normal text-black dark:text-white">
-                                <h3 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{activity.name}</h3>
-                                <p>Type: {activity.type}</p>
-                                <p>Sport Type: {activity.sport_type}</p>
-                                <p>Date &amp; Time: {convertToLocaleString(activity.start_date_local)}</p>
-                                <p>Elapsed Time: {Math.floor(activity.elapsed_time / 60)} minutes</p>
-                                <p>Distance Took: {activity.distance} meters</p>
-                              </div>
-                            </div>
-                          ))}
+                  </div> 
+    
+                  <div className="flex-none justify-center">
+    
+                    <div className="overflow-hidden">
                       
-                    </div>
+                       
+                          {activities &&
+                            activities.map((activity: {
+                              start_date_local: string | number | Date;
+                              distance: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined;
+                              elapsed_time: number;
+                              sport_type: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined;
+                              type: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined; id: Key | undefined;
+                              name: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined;
+                            }) => (
+                              <div className="text-center break-normal max-w-sm p-6 mt-5 mb-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-800" key={activity.id}>
+                                <div className="mb-3 font-normal text-black dark:text-white">
+                                  <h3 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{activity.name}</h3>
+                                  <p>Type: {activity.type}</p>
+                                  <p>Sport Type: {activity.sport_type}</p>
+                                  <p>Date &amp; Time: {convertToLocaleString(activity.start_date_local)}</p>
+                                  <p>Elapsed Time: {Math.floor(activity.elapsed_time / 60)} minutes</p>
+                                  <p>Distance Took: {activity.distance} meters</p>
+                                </div>
+                              </div>
+                            ))}
+                        
+                      </div>
+                    
+                  </div>
                   
                 </div>
-                
-              </div>
-
-          </main>
-
-          <footer>
-          </footer>
+    
+            </main>
+    
+            <footer>
+            </footer>
+          </div>
+      
         </div>
-      )
+      );
 }

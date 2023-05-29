@@ -1,19 +1,21 @@
-import { useRouter } from 'next/router'
+import React from 'react'
+import axios from 'axios'
 
-const LogoutButton = () => {
-  const router = useRouter()
-
+const LogoutButton: React.FC = () => {
   const handleLogout = async () => {
     try {
-      await fetch('/api/logout', { method: 'POST' })
-      router.push('/') // Redirect to the home page or any desired location
+      // Make a request to the logout API route
+      await axios.get('/api/logout')
+
+      // Redirect the user to the dashboard or login page
+      window.location.href = '/'
     } catch (error) {
-      console.error('Logout failed:', error)
+      console.error('Logout failed', error)
     }
   }
 
   return (
-    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 mt-4 rounded" onClick={handleLogout}>Log Out</button>
+    <button type="button" className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 mt-4 rounded" onClick={handleLogout}>Log Out</button>
   )
 }
 
