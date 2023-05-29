@@ -3,30 +3,13 @@ import 'tailwindcss/tailwind.css'
 import { JSXElementConstructor, Key, ReactChild, ReactElement, ReactFragment, ReactNodeArray, ReactPortal } from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import L, { LatLngExpression } from 'leaflet';
+import { LatLngExpression } from 'leaflet';
 import polyline from '@mapbox/polyline'
 import LogoutButton from './components/LogOutButton'
-import dynamic from 'next/dynamic';
-const MapContainer = dynamic(() => import('react-leaflet').then((module) => module.MapContainer), {
-  ssr: false,
-});
-
-const TileLayer = dynamic(() => import('react-leaflet').then((module) => module.TileLayer), {
-  ssr: false,
-});
-
-const Polyline = dynamic(() => import('react-leaflet').then((module) => module.Polyline), {
-  ssr: false,
-});
-
-const Popup = dynamic(() => import('react-leaflet').then((module) => module.Popup), {
-  ssr: false,
-});
-
-
+import { MapContainer, TileLayer, Popup, Polyline } from 'react-leaflet';
 
 export default function Dashboard(){
-  
+
     interface Activity {
       id: number;
       name: string;
@@ -36,7 +19,6 @@ export default function Dashboard(){
       elapsed_time: number;
       distance: Float32Array;
       start_latlng: LatLngExpression | undefined;
-      // Add other properties as needed
     }
     
     interface PersonalData{
@@ -130,6 +112,7 @@ export default function Dashboard(){
           }
         };
 
+        
           fetchActivities();
           fetchPersonalData();
           fetchProfilePicture();
@@ -160,10 +143,6 @@ export default function Dashboard(){
         return dateTime.toLocaleString();
       };
 
-      const hasCoordinates = (activity: Activity) => {
-        return activity.start_latlng && isValidLatLng(activity.start_latlng);
-      };
-
       const isValidLatLng = (latlng: LatLngExpression | undefined) => {
         if (!latlng) {
           return false;
@@ -172,7 +151,7 @@ export default function Dashboard(){
         const [lat, lng] = latlng as [number, number];
       
         return !isNaN(lat) && !isNaN(lng);
-      };
+      };   
 
       const MapComponent = () => {
         const [isClient, setIsClient] = useState(false);
@@ -181,8 +160,8 @@ export default function Dashboard(){
           setIsClient(true);
         }, []);
       
-        if (!isClient) {
-          return null; // Render nothing on the server-side
+        if (typeof window === 'undefined' || !isClient) {
+          return null; // Render nothing on the server-side or before client-side rendering
         }
       
         return (
@@ -199,7 +178,7 @@ export default function Dashboard(){
             ))}
           </MapContainer>
         );
-      };        
+      };
 
       return (
         <div className="container bg-gray-100 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
@@ -234,7 +213,7 @@ export default function Dashboard(){
                 <div className="flex-1 justify-center max-w-4xl">
 
                   <div className="sticky top-5 text-center break-normal p-2 mr-5 mb-5 ml-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    <MapComponent />
+                  <MapComponent />
                   </div>   
                   
                 </div> 
