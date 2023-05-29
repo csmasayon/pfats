@@ -7,8 +7,8 @@ import { LatLngExpression } from 'leaflet';
 import polyline from '@mapbox/polyline'
 import dynamic from 'next/dynamic'
 import router, { useRouter } from 'next/router';
-import { isAccessTokenValid } from '../utils/auth';
-import LogoutButton from '../components/logoutbutton';
+import { isAccessTokenValid } from './utils/auth';
+import LogoutButton from './components/logoutbutton';
 import 'leaflet/dist/leaflet.css';
 
 const MapContainer = dynamic(() => import('react-leaflet').then((module) => module.MapContainer), {
