@@ -204,6 +204,18 @@ export default function Dashboard(){
         );
       };
 
+      const handleLogout = async () => {
+        try {
+          // Make a request to the logout API route
+          await axios.get('/api/logout')
+    
+          // Redirect the user to the dashboard or login page
+          window.location.href = '/'
+        } catch (error) {
+          console.error('Logout failed', error)
+        }
+      }
+
       return (
         <div className="container bg-gray-100 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
          
@@ -228,7 +240,7 @@ export default function Dashboard(){
                       <p>Female</p>
                     )}
                     <p>{personalData.weight} kg</p>
-                    <LogoutButton />
+                    <button type="button" className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 mt-4 rounded" onClick={handleLogout}>Log Out</button>
                     </div>)}
     
                   </div>
