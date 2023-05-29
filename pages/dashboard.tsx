@@ -43,7 +43,7 @@ export default function Dashboard(){
     const [personalData, setPersonalData] = useState<PersonalData>();
     const [profilePicture, setProfilePicture] = useState('');
     const [nodes, setNodes] = useState<Node[]>([]);
-    const [mapCenter, setMapCenter] = useState<[number, number] | null>(null);
+    const [mapCenter, setMapCenter] = useState<LatLngExpression | undefined>(undefined);
     
 
     useEffect(() => {
@@ -70,6 +70,7 @@ export default function Dashboard(){
 
             // Calculate the average latitude and longitude for the center
           const latlngs = response.data
+
             .filter((activity: Activity) => activity.start_latlng && isValidLatLng(activity.start_latlng))
             .map((activity: Activity) => activity.start_latlng!);
           if (latlngs.length > 0) {
@@ -149,40 +150,41 @@ export default function Dashboard(){
       };
 
       const isValidLatLng = (latlng: LatLngExpression | undefined) => {
-        if (!latlng || latlng.length !== 2) {
+        if (!latlng) {
           return false;
         }
-        
-        const [lat, lng] = latlng;
+      
+        const [lat, lng] = latlng as [number, number];
+      
         return !isNaN(lat) && !isNaN(lng);
       };
 
       const MapComponent = () => {
-        const [isClient, setIsClient] = useState(false);
-      
-        useEffect(() => {
-          setIsClient(true);
-        }, []);
-      
-        if (!isClient) {
-          return null; // Render nothing on the server-side
-        }
-      
-        return (
-          <MapContainer center={mapCenter} zoom={14} style={{ height: '40em', width: '100%' }}>
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
-            {nodes.map((activity, i) => (
-              <Polyline key={i} positions={activity.activityPositions}>
-                <Popup>
-                  <div>
-                    <h2>{"Name: " + activity.activityName}</h2>
-                  </div>
-                </Popup>
-              </Polyline>
-            ))}
-          </MapContainer>
-        );
-      };
+      const [isClient, setIsClient] = useState(false);
+    
+      useEffect(() => {
+        setIsClient(true);
+      }, []);
+    
+      if (!isClient) {
+        return null; // Render nothing on the server-side
+      }
+    
+      return (
+        <MapContainer center={mapCenter} zoom={14} style={{ height: '40em', width: '100%' }}>
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
+          {nodes.map((activity, i) => (
+            <Polyline key={i} positions={activity.activityPositions}>
+              <Popup>
+                <div>
+                  <h2>{"Name: " + activity.activityName}</h2>
+                </div>
+              </Popup>
+            </Polyline>
+          ))}
+        </MapContainer>
+      );
+    };
 
       return (
         <div className="container bg-gray-100 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
