@@ -9,7 +9,23 @@ import L, { LatLngExpression } from 'leaflet';
 import dynamic from 'next/dynamic';
 import polyline from '@mapbox/polyline'
 import LogoutButton from './components/LogOutButton'
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
+
+const MapContainer = dynamic(() => import('react-leaflet').then((module) => module.MapContainer), {
+  ssr: false,
+});
+
+const TileLayer = dynamic(() => import('react-leaflet').then((module) => module.TileLayer), {
+  ssr: false,
+});
+
+const Polyline = dynamic(() => import('react-leaflet').then((module) => module.Polyline), {
+  ssr: false,
+});
+
+const Popup = dynamic(() => import('react-leaflet').then((module) => module.Popup), {
+  ssr: false,
+});
+
 
 export default function Dashboard(){
     interface Activity {
@@ -65,7 +81,6 @@ export default function Dashboard(){
               polylines.push({activityPositions: polyline.decode(activity_polyline), activityName: activity_name});
             }
 
-            console.log(polylines)
             setNodes(polylines);
 
             // Calculate the average latitude and longitude for the center
