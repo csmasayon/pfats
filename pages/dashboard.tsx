@@ -10,7 +10,7 @@ import router, { useRouter } from 'next/router';
 import { isAccessTokenValid } from './utils/auth';
 import 'leaflet/dist/leaflet.css';
 
-const DynamicMap = dynamic(() => import('./MapComponent'), {
+const DynamicMap = dynamic(() => import('./components/MapComponent'), {
   ssr: false,
 });
 
@@ -226,7 +226,7 @@ export default function Dashboard(){
                               type: string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | ReactPortal | null | undefined; id: Key | undefined;
                               name: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined;
                             }) => (
-                              <div className="text-center break-normal max-w-sm p-6 mt-5 mb-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-800" key={activity.id}>
+                              <div className="text-center break-normal max-w-sm p-6 mt-5 mb-5 mr-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-800" key={activity.id}>
                                 <div className="mb-3 font-normal text-black dark:text-white">
                                   <h3 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{activity.name}</h3>
                                   <p>Type: {activity.type}</p>
