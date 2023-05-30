@@ -194,6 +194,9 @@ export default function Dashboard(){
             <div className="container bg-gray-100 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
             <Head>  
               <title>Physical Fitness Activity Tracker System</title>
+              <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+              integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+              crossOrigin=""/>
               <link rel="icon" href="/favicon.ico" />
             </Head>
     
