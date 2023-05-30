@@ -10,24 +10,12 @@ import router, { useRouter } from 'next/router';
 import { isAccessTokenValid } from './utils/auth';
 import 'leaflet/dist/leaflet.css';
 
-const MapContainer = dynamic<{}>(() => import('react-leaflet').then((module) => module.MapContainer), {
+const DynamicMap = dynamic(() => import('./MapComponent'), {
   ssr: false,
 });
 
-const TileLayer = dynamic<{}>(() => import('react-leaflet').then((module) => module.TileLayer) as any, {
-  ssr: false,
-});
-
-const Polyline = dynamic<{}>(() => import('react-leaflet').then((module) => module.Polyline) as any, {
-  ssr: false,
-});
-
-const Popup = dynamic<{}>(() => import('react-leaflet').then((module) => module.Popup) as any, {
-  ssr: false,
-});
 
 export default function Dashboard(){
-
     interface Activity {
       id: number;
       name: string;
@@ -176,32 +164,6 @@ export default function Dashboard(){
         return !isNaN(lat) && !isNaN(lng);
       };   
 
-      const MapComponent = () => {
-        const [isClient, setIsClient] = useState(false);
-      
-        useEffect(() => {
-          setIsClient(true);
-        }, []);
-      
-        if (typeof window === 'undefined' || !isClient) {
-          return null; // Render nothing on the server-side or before client-side rendering
-        }
-      
-        return (
-          <MapContainer center={mapCenter} zoom={14} style={{ height: '40em', width: '100%' }}>
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'/>
-            {nodes.map((activity, i) => (
-              <Polyline key={i} positions={activity.activityPositions}>
-                <Popup>
-                  <div>
-                    <h2>{"Name: " + activity.activityName}</h2>
-                  </div>
-                </Popup>
-              </Polyline>
-            ))}
-          </MapContainer>
-        );
-      };
 
       const handleLogout = async () => {
         try {
@@ -247,7 +209,7 @@ export default function Dashboard(){
                   <div className="flex-1 justify-center max-w-4xl">
     
                     <div className="sticky top-5 text-center break-normal p-2 mr-5 mb-5 ml-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    <MapComponent />
+                    <DynamicMap />
                     </div>   
                     
                   </div> 
@@ -255,8 +217,6 @@ export default function Dashboard(){
                   <div className="flex-none justify-center">
     
                     <div className="overflow-hidden">
-                      
-                       
                           {activities &&
                             activities.map((activity: {
                               start_date_local: string | number | Date;
@@ -278,7 +238,7 @@ export default function Dashboard(){
                               </div>
                             ))}
                         
-                      </div>
+                    </div>
                     
                   </div>
                   
