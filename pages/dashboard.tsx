@@ -1,3 +1,4 @@
+
 import Head from 'next/head'
 import 'tailwindcss/tailwind.css'
 import { JSXElementConstructor, Key, ReactChild, ReactElement, ReactFragment, ReactNodeArray, ReactPortal } from 'react';
@@ -5,13 +6,13 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { LatLngExpression } from 'leaflet';
 import polyline from '@mapbox/polyline'
-import dynamic from 'next/dynamic'
-import router, { useRouter } from 'next/router';
-import { isAccessTokenValid } from './utils/auth';
+import router from 'next/router';
 import 'leaflet/dist/leaflet.css';
+import dynamic from 'next/dynamic';
 
 export default function Dashboard(){
-    const MapComponent = dynamic(() => import('./components/MapComponent'), { ssr: false });
+
+    const isServer = (): boolean => typeof window === 'undefined';
     interface Activity {
       id: number;
       name: string;
@@ -62,6 +63,22 @@ export default function Dashboard(){
   
       return '';
     };
+
+    const isAccessTokenValid = () => {
+      if (typeof document !== 'undefined') {
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const cookies = decodedCookie.split(';');
+        const accessTokenCookie = cookies.find((cookie) => cookie.trim().startsWith('access_token='));
+    
+        if (accessTokenCookie) {
+          const accessToken = accessTokenCookie.split('=')[1];
+          return !!accessToken;
+        }
+      }
+    
+      return false;
+    };
+  
 
     useEffect(() => {
 
@@ -205,7 +222,7 @@ export default function Dashboard(){
                   <div className="flex-1 justify-center max-w-4xl">
     
                     <div className="sticky top-5 text-center break-normal p-2 mr-5 mb-5 ml-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    <MapComponent />
+                     
                     </div>   
                     
                   </div> 
