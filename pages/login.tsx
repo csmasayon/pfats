@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import axios from 'axios';
 
-const redirectUri = encodeURIComponent('./api/strava-auth');
+const redirectUri = encodeURIComponent('https://pfats.vercel.com/api/strava-auth');
 
 export default function Login() {
   useEffect(() => {
