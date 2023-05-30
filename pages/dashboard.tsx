@@ -1,4 +1,3 @@
-
 import Head from 'next/head'
 import 'tailwindcss/tailwind.css'
 import { JSXElementConstructor, Key, ReactChild, ReactElement, ReactFragment, ReactNodeArray, ReactPortal } from 'react';
@@ -7,8 +6,7 @@ import axios from 'axios';
 import { LatLngExpression } from 'leaflet';
 import polyline from '@mapbox/polyline'
 import router from 'next/router';
-import 'leaflet/dist/leaflet.css';
-import dynamic from 'next/dynamic';
+import MapComponent from '../components/MapComponent';
 
 export default function Dashboard(){
 
@@ -222,7 +220,7 @@ export default function Dashboard(){
                   <div className="flex-1 justify-center max-w-4xl">
     
                     <div className="sticky top-5 text-center break-normal p-2 mr-5 mb-5 ml-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                     
+                      <MapComponent />
                     </div>   
                     
                   </div> 
