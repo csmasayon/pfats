@@ -10,11 +10,6 @@ import router, { useRouter } from 'next/router';
 import { isAccessTokenValid } from './utils/auth';
 import 'leaflet/dist/leaflet.css';
 
-const DynamicMap = dynamic(() => import('./components/MapComponent'), {
-  ssr: false,
-});
-
-
 export default function Dashboard(){
     interface Activity {
       id: number;
@@ -176,6 +171,10 @@ export default function Dashboard(){
           console.error('Logout failed', error)
         }
       }
+      
+      const DynamicMap = dynamic(() => import('./components/MapComponent'), {
+        ssr: false,
+      });
 
       return (
         <div className="container bg-gray-100 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
