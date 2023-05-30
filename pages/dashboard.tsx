@@ -11,6 +11,7 @@ import { isAccessTokenValid } from './utils/auth';
 import 'leaflet/dist/leaflet.css';
 
 export default function Dashboard(){
+    const MapComponent = dynamic(() => import('./components/MapComponent'), { ssr: false });
     interface Activity {
       id: number;
       name: string;
@@ -171,11 +172,7 @@ export default function Dashboard(){
           console.error('Logout failed', error)
         }
       }
-      
-      const DynamicMap = dynamic(() => import('./components/MapComponent'), {
-        ssr: false,
-      });
-
+    
       return (
         <div className="container bg-gray-100 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
          
@@ -208,7 +205,7 @@ export default function Dashboard(){
                   <div className="flex-1 justify-center max-w-4xl">
     
                     <div className="sticky top-5 text-center break-normal p-2 mr-5 mb-5 ml-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    <DynamicMap />
+                    <MapComponent />
                     </div>   
                     
                   </div> 

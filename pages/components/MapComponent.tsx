@@ -4,6 +4,8 @@ import axios from 'axios';
 import { LatLngExpression } from 'leaflet';
 import polyline from '@mapbox/polyline';
 
+const isServer = (): boolean => typeof window === 'undefined';
+
 const MapComponent = () => {
   interface Activity {
     id: number;
@@ -102,20 +104,24 @@ const MapComponent = () => {
     return <div className="font-bold text-black dark:text-white">Loading...</div>
   }
 
-  return (
-    <MapContainer center={mapCenter || [0,0]} zoom={14} style={{ height: '40em', width: '100%' }}>
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
-      {nodes.map((activity, i) => (
-        <Polyline key={i} positions={activity.activityPositions}>
-          <Popup>
-            <div>
-              <h2>{"Name: " + activity.activityName}</h2>
-            </div>
-          </Popup>
-        </Polyline>
-      ))}
-    </MapContainer>
-  );
+  if (!isServer()) {
+    return (
+      <MapContainer center={mapCenter || [0, 0]} zoom={14} style={{ height: '40em', width: '100%' }}>
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
+        {nodes.map((activity, i) => (
+          <Polyline key={i} positions={activity.activityPositions}>
+            <Popup>
+              <div>
+                <h2>{"Name: " + activity.activityName}</h2>
+              </div>
+            </Popup>
+          </Polyline>
+        ))}
+      </MapContainer>
+    );
+  }
+
+  return null;
 };
 
 export default MapComponent;
