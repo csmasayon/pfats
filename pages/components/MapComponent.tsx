@@ -6,22 +6,6 @@ import dynamic from 'next/dynamic';
 
 const isServer = (): boolean => typeof window === 'undefined';
 
-const MapContainer = dynamic(() => import('react-leaflet').then((module) => module.MapContainer), {
-  ssr: false,
-});
-
-const TileLayer = dynamic(() => import('react-leaflet').then((module) => module.TileLayer), {
-  ssr: false,
-});
-
-const Polyline = dynamic(() => import('react-leaflet').then((module) => module.Polyline), {
-  ssr: false,
-});
-
-const Popup = dynamic(() => import('react-leaflet').then((module) => module.Popup), {
-  ssr: false,
-});
-
 const MapComponent = () => {
   interface Activity {
     id: number;
@@ -121,6 +105,11 @@ const MapComponent = () => {
   }
 
   if (!isServer()) {
+    const MapContainer = dynamic(() => import('react-leaflet').then((module) => module.MapContainer), { ssr: false });
+    const TileLayer = dynamic(() => import('react-leaflet').then((module) => module.TileLayer), { ssr: false });
+    const Polyline = dynamic(() => import('react-leaflet').then((module) => module.Polyline), { ssr: false });
+    const Popup = dynamic(() => import('react-leaflet').then((module) => module.Popup), { ssr: false });
+
     return (
       <MapContainer center={mapCenter || [0, 0]} zoom={14} style={{ height: '40em', width: '100%' }}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
