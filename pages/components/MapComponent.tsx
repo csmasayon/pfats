@@ -1,10 +1,26 @@
 import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Polyline, Popup } from 'react-leaflet';
 import axios from 'axios';
 import { LatLngExpression } from 'leaflet';
 import polyline from '@mapbox/polyline';
+import dynamic from 'next/dynamic';
 
 const isServer = (): boolean => typeof window === 'undefined';
+
+const MapContainer = dynamic(() => import('react-leaflet').then((module) => module.MapContainer), {
+  ssr: false,
+});
+
+const TileLayer = dynamic(() => import('react-leaflet').then((module) => module.TileLayer), {
+  ssr: false,
+});
+
+const Polyline = dynamic(() => import('react-leaflet').then((module) => module.Polyline), {
+  ssr: false,
+});
+
+const Popup = dynamic(() => import('react-leaflet').then((module) => module.Popup), {
+  ssr: false,
+});
 
 const MapComponent = () => {
   interface Activity {
