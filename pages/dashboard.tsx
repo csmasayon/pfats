@@ -9,9 +9,8 @@ import dynamic from 'next/dynamic'
 import router, { useRouter } from 'next/router';
 import { isAccessTokenValid } from './utils/auth';
 import 'leaflet/dist/leaflet.css';
-import { MapContainer as LeafletMapContainer, TileLayer as LeafletTileLayer, Polyline as LeafletPolyline, Popup as LeafletPopup } from 'react-leaflet';
 
-const MapContainer = dynamic<{}>(() => import('react-leaflet').then((module) => module.MapContainer) as any, {
+const MapContainer = dynamic<{}>(() => import('react-leaflet').then((module) => module.MapContainer), {
   ssr: false,
 });
 
