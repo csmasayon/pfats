@@ -4,7 +4,6 @@ import { JSXElementConstructor, Key, ReactChild, ReactElement, ReactFragment, Re
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { LatLngExpression } from 'leaflet';
-import polyline from '@mapbox/polyline'
 import router from 'next/router';
 import MapComponent from '../components/MapComponent';
 import Link from 'next/link';

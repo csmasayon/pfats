@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Head from 'next/head';
 
+
 interface EditActivityPageProps {
     activityId: string;
   }
@@ -15,7 +16,7 @@ interface EditActivityPageProps {
     distance: string;
   }
   
-  const EditActivityPage: React.FC<EditActivityPageProps> = ({ activityId }) => {
+const EditActivityPage: React.FC<EditActivityPageProps> = ({ activityId }) => {
     const router = useRouter();
     const { id } = router.query;
     const [activityData, setActivityData] = useState<ActivityFormData>();
@@ -142,17 +143,8 @@ interface EditActivityPageProps {
                             </div>
 
                             <div>
-  <input
-    type="text"
-    className="shadow appearance-none rounded w-min py-2 px-3 text-black border-black leading-tight focus:outline-none focus:shadow-outline"
-    placeholder={activityData.distance.toString()}
-    value={activityData.distance.toString()}
-    onChange={(e) => setActivityData({ ...activityData, distance: e.target.value })}
-  />
-</div>
-
-
-
+                                <input type="text" className="shadow appearance-none rounded w-min py-2 px-3 text-black border-black leading-tight focus:outline-none focus:shadow-outline" placeholder={activityData.distance.toString()} value={activityData.distance.toString()} onChange={(e) => setActivityData({ ...activityData, distance: e.target.value })}/>
+                            </div>
                            
                             <div>
                                 <button type="submit" className="mt-5 flex-1 items-center space-x-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update</button>
