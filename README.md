@@ -4,6 +4,8 @@ A personalized user dashboard using the Strava API.
 
 To use the personalized user dashboard, the user must login to their Strava account and the user can retrieve the details of the activities done by the user.
 
+Project made for school requirements.
+
 ## Info
 Built using:
 - [Next.js](https://github.com/vercel/next.js/) (React)
