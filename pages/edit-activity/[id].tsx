@@ -93,6 +93,7 @@ const EditActivityPage: React.FC<EditActivityPageProps> = ({ activityId }) => {
               <Head>  
                 <title>Physical Fitness Activity Tracker System</title>
                 <link rel="icon" href="/favicon.ico" />
+                <script src="https://cdn.tailwindcss.com"></script>
               </Head>
               
               <main>

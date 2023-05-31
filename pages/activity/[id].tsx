@@ -84,6 +84,7 @@ export default function ActivityPage() {
               integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
               crossOrigin=""/>
               <link rel="icon" href="/favicon.ico" />
+              <script src="https://cdn.tailwindcss.com"></script>
             </Head>
             
             <main>
