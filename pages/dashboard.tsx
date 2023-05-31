@@ -7,10 +7,9 @@ import { LatLngExpression } from 'leaflet';
 import polyline from '@mapbox/polyline'
 import router from 'next/router';
 import MapComponent from '../components/MapComponent';
+import Link from 'next/link';
 
 export default function Dashboard(){
-
-    const isServer = (): boolean => typeof window === 'undefined';
     interface Activity {
       id: number;
       name: string;
@@ -95,28 +94,6 @@ export default function Dashboard(){
             });
     
             setActivities(response.data);
-
-            const polylines = [];
-            for (let i = 0; i < response.data.length; i += 1) {
-              const activity_polyline = response.data[i].map.summary_polyline;
-              const activity_name = response.data[i].name;
-              polylines.push({activityPositions: polyline.decode(activity_polyline), activityName: activity_name});
-            }
-
-            setNodes(polylines);
-
-            // Calculate the average latitude and longitude for the center
-          const latlngs = response.data
-
-            .filter((activity: Activity) => activity.start_latlng && isValidLatLng(activity.start_latlng))
-            .map((activity: Activity) => activity.start_latlng!);
-          if (latlngs.length > 0) {
-            const totalLat = latlngs.reduce((sum: any, latlng: any[]) => sum + latlng[0], 0);
-            const totalLng = latlngs.reduce((sum: any, latlng: any[]) => sum + latlng[1], 0);
-            const avgLat = totalLat / latlngs.length;
-            const avgLng = totalLng / latlngs.length;
-            setMapCenter([avgLat, avgLng]);
-          }
           } catch (error) {
             console.error('Failed to fetch activities:', error);
           }
@@ -220,9 +197,13 @@ export default function Dashboard(){
     
                   </div>
     
-                  <div className="flex-1 justify-center max-w-4xl">
+                  <div className="sticky flex-1 justify-center max-w-4xl">
+
+                    <div className="sticky top-5 text-center break-normal p-2 mr-5 mb-9 ml-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        <h3 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">World Map</h3>
+                    </div>  
     
-                    <div className="sticky top-5 text-center break-normal p-2 mr-5 mb-5 ml-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    <div className="sticky top-24 text-center break-normal p-2 mr-5 mb-5 ml-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                       <MapComponent />
                     </div>   
                     
@@ -231,6 +212,9 @@ export default function Dashboard(){
                   <div className="flex-none justify-center">
     
                     <div className="overflow-hidden">
+                        <div className="text-center break-normal max-w-sm p-2 mt-5 mb-5 mr-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-800">
+                          <h3 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Recent Activities</h3>
+                        </div>
                           {activities &&
                             activities.map((activity: {
                               start_date_local: string | number | Date;
@@ -248,6 +232,12 @@ export default function Dashboard(){
                                   <p>Date &amp; Time: {convertToLocaleString(activity.start_date_local)}</p>
                                   <p>Elapsed Time: {Math.floor(activity.elapsed_time / 60)} minutes</p>
                                   <p>Distance Took: {activity.distance} meters</p>
+                                  <Link href={`/activity/${activity.id}`} passHref>
+                                    <button type="button" className="mt-5 flex-1 items-center space-x-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">View Details</button>
+                                  </Link>
+                                  <Link href={(`/edit-activity/${activity.id}`)} passHref>
+                                  <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold ml-2 py-2 px-3 mt-4 rounded"> Edit </button>
+                                  </Link>
                                 </div>
                               </div>
                             ))}
