@@ -12,7 +12,7 @@ interface EditActivityPageProps {
     name: string;
     type: string;
     sport_type: string;
-    elapsed_time: number;
+    elapsed_time: string;
     distance: string;
   }
   
@@ -92,9 +92,6 @@ const EditActivityPage: React.FC<EditActivityPageProps> = ({ activityId }) => {
         <div className="container bg-gray-100 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
               <Head>  
                 <title>Physical Fitness Activity Tracker System</title>
-                <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-                integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-                crossOrigin=""/>
                 <link rel="icon" href="/favicon.ico" />
               </Head>
               
@@ -135,7 +132,7 @@ const EditActivityPage: React.FC<EditActivityPageProps> = ({ activityId }) => {
                             </div>
 
                             <div>
-                                <input type="string" className="shadow appearance-none rounded w-min py-2 px-3 text-black border-black leading-tight focus:outline-none focus:shadow-outline" placeholder={activityData.elapsed_time.toString()} value={activityData.elapsed_time} onChange={(e) => setActivityData({ ...activityData, elapsed_time: Number(e.target.value) })}/>
+                                <input type="string" className="shadow appearance-none rounded w-min py-2 px-3 text-black border-black leading-tight focus:outline-none focus:shadow-outline" placeholder={activityData.elapsed_time.toString()} value={activityData.elapsed_time.toString()} onChange={(e) => setActivityData({ ...activityData, elapsed_time: e.target.value })}/>
                             </div>
 
                             <div className="mt-2 mb-2">

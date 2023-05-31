@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html>
       <Head>
-        
+        <link rel="stylesheet" href="/styles/globals.css" />
       </Head>
       <body>
         <Main />
