@@ -16,6 +16,7 @@ interface Activity {
   elapsed_time: number;
   distance: Float32Array;
   start_latlng: LatLngExpression | undefined;
+  description: string;
 }
 
 export default function ActivityPage() {
@@ -93,6 +94,7 @@ export default function ActivityPage() {
                     <div className="sticky top-5 text-center break-normal p-6 mb-3 mt-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 font-normal text-black dark:text-white">
                       <MapSingularComponent />
                       <h3 className="mb-2 text-2xl mt-2 font-bold tracking-tight text-gray-900 dark:text-white">{activity.name}</h3>
+                      <p>{activity.description}</p>
                       <p>Type: {activity.type}</p>
                       <p>Sport Type: {activity.sport_type}</p>
                       <p>Date & Time: {convertToLocaleString(activity.start_date_local)}</p>
