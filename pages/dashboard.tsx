@@ -39,8 +39,7 @@ export default function Dashboard(){
     const [activities, setActivities] = useState<Activity[]>([]);
     const [personalData, setPersonalData] = useState<PersonalData>();
     const [profilePicture, setProfilePicture] = useState('');
-    const [nodes, setNodes] = useState<Node[]>([]);
-    const [mapCenter, setMapCenter] = useState<LatLngExpression | undefined>(undefined);
+    const [athleteStats, setAthleteStats] = useState<any>(null);
     
     const getAccessToken = () => {
       // Get the access token from the cookie
@@ -114,6 +113,21 @@ export default function Dashboard(){
           }  
         };
 
+        const fetchAthleteStats = async () => {
+          try {
+            if (personalData) {
+              const response = await axios.get(`https://www.strava.com/api/v3/athletes/${personalData.id}/stats`, {
+                headers: {
+                  Authorization: `Bearer YOUR_STRAVA_ACCESS_TOKEN`,
+                },
+              });
+              setAthleteStats(response.data);
+            }
+          } catch (error) {
+            console.error('Error fetching athlete stats:', error);
+          }
+        };
+
         const fetchProfilePicture = async () => {
           try {
             const response = await axios.get('https://www.strava.com/api/v3/athlete', {
@@ -133,6 +147,7 @@ export default function Dashboard(){
         
           fetchActivities();
           fetchPersonalData();
+          fetchAthleteStats();
           fetchProfilePicture();
         
       }, []);
@@ -194,6 +209,15 @@ export default function Dashboard(){
                     <p>{personalData.weight} kg</p>
                     <button type="button" className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 mt-4 rounded" onClick={handleLogout}>Log Out</button>
                     </div>)}
+
+                    <div className="sticky top-5 text-center break-normal max-w-sm p-6 ml-6 mb-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 font-normal text-black dark:text-white">
+                    <h3>Pew</h3>
+                    <p>Count: {athleteStats.all_ride_totals.count}</p>
+                    <p>Distance: {athleteStats.all_ride_totals.distance}</p>
+                    <p>Moving Time: {athleteStats.all_ride_totals.moving_time}</p>
+                    <p>Elapsed Time: {athleteStats.all_ride_totals.elapsed_time}</p>
+                    <p>Elevation Gain: {athleteStats.all_ride_totals.elevation_gain}</p>
+                    </div>
     
                   </div>
     

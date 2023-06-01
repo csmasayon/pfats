@@ -99,7 +99,7 @@ const EditActivityPage: React.FC<EditActivityPageProps> = ({ activityId }) => {
               <main>
                   <div className='flex mx-auto justify-center'>
                     <div className="flex-1 justify-center max-w-4xl">
-                      <div className="sticky top-5 text-center break-normal p-6 ml-6 mb-3 mt-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 font-normal text-black dark:text-white">
+                      <div className="sticky top-5 text-center break-normal p-6 ml-6 mb-5 mt-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 font-normal text-black dark:text-white">
                         <div>
                             <form onSubmit={handleSubmit}>
                             <h3 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Edit Activity</h3>
