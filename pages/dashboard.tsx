@@ -18,6 +18,7 @@ export default function Dashboard(){
       elapsed_time: number;
       distance: Float32Array;
       start_latlng: LatLngExpression | undefined;
+      description: string;
     }
     
     interface PersonalData{
