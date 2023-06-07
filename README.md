@@ -10,7 +10,6 @@ Project made for school requirements.
 Built using:
 - [Next.js](https://github.com/vercel/next.js/) (React)
 - [Express.js](https://github.com/expressjs/express)
-- [MongoDB](https://github.com/mongodb/mongo)
 - [Leaflet](https://github.com/Leaflet/Leaflet) (for Maps)
 - [Strava API](https://developers.strava.com/) (for activity retrieval)
 
