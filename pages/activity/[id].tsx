@@ -95,11 +95,22 @@ export default function ActivityPage() {
                       <MapSingularComponent />
                       <h3 className="mb-2 text-2xl mt-2 font-bold tracking-tight text-gray-900 dark:text-white">{activity.name}</h3>
                       <p>{activity.description}</p>
-                      <p>Type: {activity.type}</p>
-                      <p>Sport Type: {activity.sport_type}</p>
-                      <p>Date & Time: {convertToLocaleString(activity.start_date_local)}</p>
-                      <p>Elapsed Time: {Math.floor(activity.elapsed_time / 60)} minutes</p>
-                      <p>Distance Took: {activity.distance} meters</p>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <p>Type:</p>
+                          <p>Sport Type:</p>
+                          <p>Date &amp; Time:</p>
+                          <p>Elapsed Time:</p>
+                          <p>Distance Took:</p>
+                        </div>
+                        <div>
+                          <p>{activity.type}</p>
+                          <p>{activity.sport_type}</p>
+                          <p className="overflow-hidden overflow-ellipsis whitespace-nowrap">{convertToLocaleString(activity.start_date_local)}</p>
+                          <p>{Math.floor(activity.elapsed_time / 60)} minutes</p>
+                          <p>{activity.distance} meters</p>
+                        </div>
+                      </div>
                       <Link href={`/dashboard`} passHref>
                             <button type="button" className="mt-5 flex-1 items-center space-x-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Return to Dashboard</button>
                       </Link>
