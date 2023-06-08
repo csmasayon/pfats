@@ -209,8 +209,7 @@ export default function Dashboard(){
     
                     <div className="sticky top-24 text-center break-normal p-2 mr-5 mb-5 ml-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                       <MapComponent />
-                    </div>   
-                    
+                    </div>            
                   </div> 
     
                   <div className="flex-none justify-center">

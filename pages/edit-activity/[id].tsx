@@ -135,6 +135,20 @@ const EditActivityPage: React.FC<EditActivityPageProps> = ({ activityId }) => {
                             <div className="mt-2 mb-2 flex items-center justify-center">
                               <label className="text-black dark:text-white">Sport Type: </label>
                               <div className="relative inline-block ml-2" onMouseEnter={() => setShowBox(true)} onMouseLeave={() => setShowBox(false)}>
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="16" x2="12" y2="12" />
+                                <line x1="12" y1="8" x2="12" y2="8" />
+                              </svg>
+                              {showBox && (
+                                <div className={`absolute top-0 left-0 mt-8 ml-4 p-2 bg-white rounded text-black shadow transition-opacity duration-300 ${
+                                  showBox ? 'opacity-100' : 'opacity-0'
+                                }`}>
+                                  AlpineSki, BackcountrySki, Badminton, Canoeing, Crossfit, EBikeRide, Elliptical, EMountainBikeRide, Golf, GravelRide, Handcycle, HighIntensityIntervalTraining, Hike, IceSkate, InlineSkate, Kayaking, Kitesurf, MountainBikeRide, NordicSki, Pickleball, Pilates, Racquetball, Ride, RockClimbing, RollerSki, Rowing, Run, Sail, Skateboard, Snowboard, Snowshoe, Soccer, Squash, StairStepper, StandUpPaddling, Surfing, Swim, TableTennis, Tennis, TrailRun, Velomobile, VirtualRide, VirtualRow, VirtualRun, Walk, WeightTraining, Wheelchair, Windsurf, Workout, Yoga
+                                </div>
+                              )}
+                            </div>
+                              <div className="relative inline-block ml-2" onMouseEnter={() => setShowBox(true)} onMouseLeave={() => setShowBox(false)}>
                                 {/* SVG code */}
                               </div>
                             </div>
