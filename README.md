@@ -1,4 +1,4 @@
-# <p align="center">![Physical Fitness Activity Tracker System](public/pfats-logo.png)</br>[Physical Fitness Actvity Tracker System ](https://pfats.vercel.app) </p>
+# <p align="center">![Physical Fitness Activity Tracker System](public/pfats-logo.png)</br>[Physical Fitness Actvity Tracker System ](https://pfats-v1.vercel.app) </p>
 
 
 A personalized user dashboard using the Strava API.
