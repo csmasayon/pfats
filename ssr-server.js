@@ -9,7 +9,7 @@ app.prepare()
 .then(() => {
   const server = express()
 
-  server.get('*', (req, res) => {
+  server.get('/{*path}', (req, res) => {
     return handle(req, res)
   })
 

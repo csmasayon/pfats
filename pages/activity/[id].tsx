@@ -70,57 +70,57 @@ export default function ActivityPage() {
 
   if (!activity) {
     return (
-    <div className="flex justify-center container bg-gray-100 top-5 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
-          <div className="font-bold text-black dark:text-white">Loading...</div>
-    </div>)
-  } 
+      <div className="flex justify-center container bg-gray-100 top-5 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
+        <div className="font-bold text-black dark:text-white">Loading...</div>
+      </div>)
+  }
 
   return (
     <div className="container bg-gray-100 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
 
       <div className="container bg-gray-100 dark:bg-gray-700 min-w-full min-h-screen mx-auto">
-            <Head>  
-              <title>Physical Fitness Activity Tracker System</title>
-              <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-              integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-              crossOrigin=""/>
-              <link rel="icon" href="/favicon.ico" />
-              <script src="https://cdn.tailwindcss.com"></script>
-            </Head>
-            
-            <main>
-                <div className='flex mx-auto justify-center'>
-                  <div className="flex-1 justify-center max-w-4xl">
-                    <div className="sticky top-5 text-center break-normal p-6 mb-5 mt-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 font-normal text-black dark:text-white">
-                      <MapSingularComponent />
-                      <h3 className="mb-2 text-2xl mt-2 font-bold tracking-tight text-gray-900 dark:text-white">{activity.name}</h3>
-                      <p>{activity.description}</p>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <p>Type:</p>
-                          <p>Sport Type:</p>
-                          <p>Date &amp; Time:</p>
-                          <p>Elapsed Time:</p>
-                          <p>Distance Took:</p>
-                        </div>
-                        <div>
-                          <p>{activity.type}</p>
-                          <p>{activity.sport_type}</p>
-                          <p className="overflow-hidden overflow-ellipsis whitespace-nowrap">{convertToLocaleString(activity.start_date_local)}</p>
-                          <p>{Math.floor(activity.elapsed_time / 60)} minutes</p>
-                          <p>{activity.distance} meters</p>
-                        </div>
-                      </div>
-                      <Link href={`/dashboard`} passHref>
-                            <button type="button" className="mt-5 flex-1 items-center space-x-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Return to Dashboard</button>
-                      </Link>
-                    </div>
+        <Head>
+          <title>Physical Fitness Activity Tracker System</title>
+          <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+            integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+            crossOrigin="" />
+          <link rel="icon" href="/favicon.ico" />
+          <script src="https://cdn.tailwindcss.com"></script>
+        </Head>
+
+        <main>
+          <div className='flex mx-auto justify-center'>
+            <div className="flex-1 justify-center max-w-4xl">
+              <div className="sticky top-5 text-center break-normal p-6 mb-5 mt-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 font-normal text-black dark:text-white">
+                <MapSingularComponent />
+                <h3 className="mb-2 text-2xl mt-2 font-bold tracking-tight text-gray-900 dark:text-white">{activity.name}</h3>
+                <p>{activity.description}</p>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p>Type:</p>
+                    <p>Sport Type:</p>
+                    <p>Date &amp; Time:</p>
+                    <p>Elapsed Time:</p>
+                    <p>Distance Took:</p>
+                  </div>
+                  <div>
+                    <p>{activity.type}</p>
+                    <p>{activity.sport_type}</p>
+                    <p className="overflow-hidden text-ellipsis whitespace-nowrap">{convertToLocaleString(activity.start_date_local)}</p>
+                    <p>{Math.floor(activity.elapsed_time / 60)} minutes</p>
+                    <p>{activity.distance} meters</p>
                   </div>
                 </div>
-            </main>
+                <Link href={`/dashboard`} passHref>
+                  <button type="button" className="mt-5 flex-1 items-center space-x-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Return to Dashboard</button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </main>
 
-            <footer>
-            </footer>
+        <footer>
+        </footer>
       </div>
     </div>
   );
